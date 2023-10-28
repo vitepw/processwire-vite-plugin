@@ -1,0 +1,65 @@
+{
+  "name": "processwire-vite-plugin",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "ProcessWire plugin for Vite.",
+  "keywords": [
+    "processwire",
+    "vite",
+    "vite-plugin"
+  ],
+  "homepage": "https://github.com/vitepw/processwire-vite-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitepw/processwire-vite-plugin.git"
+  },
+  "license": "MIT",
+  "author": "j. eizmendi",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./inertia-helpers": {
+      "import": "./inertia-helpers/index.js",
+      "types": "./inertia-helpers/index.d.ts"
+    }
+  },
+  "files": [
+    "/dist",
+    "/inertia-helpers"
+  ],
+  "scripts": {
+    "build": "npm run build-plugin && npm run build-inertia-helpers",
+    "build-plugin": "rm -rf dist && npm run build-plugin-types && npm run build-plugin-esm && npm run build-plugin-cjs && cp src/dev-server-index.html dist/",
+    "build-plugin-types": "tsc --emitDeclarationOnly",
+    "build-plugin-cjs": "esbuild src/index.ts --platform=node --format=cjs --outfile=dist/index.cjs",
+    "build-plugin-esm": "esbuild src/index.ts --platform=node --format=esm --outfile=dist/index.esm.js",
+    "build-inertia-helpers": "rm -rf inertia-helpers && tsc --project tsconfig.inertia-helpers.json",
+    "postinstall": "node postinstall.js",
+    "lint": "eslint --ext .ts ./src ./tests",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.16.10",
+    "typescript": "^4.6.4",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
+  },
+  "peerDependencies": {
+    "vite": "^3.0.0 || ^4.4.9"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "picocolors": "^1.0.0",
+    "vite-plugin-full-reload": "^1.0.5"
+  }
+}

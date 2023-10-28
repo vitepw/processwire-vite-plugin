@@ -1,0 +1,24 @@
+# .github/workflows/release.yml
+name: Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Install the dependancies
+        run: npm ci
+      - name: Initialize Git user
+        run: |
+          git config --global user.email "code@sekretservices.com"
+          git config --global user.name "Release Workflow 🤖"
+      - name: Log git status
+        run: git status
+      - name: Run release
+        run: npm run release --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
