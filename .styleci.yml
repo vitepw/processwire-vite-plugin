@@ -1,0 +1,5 @@
+php:
+  preset: processwire
+js: true
+css: true
+ts: true
